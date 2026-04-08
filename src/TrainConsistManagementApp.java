@@ -1,47 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Pattern;
 
 public class TrainConsistManagementApp {
-
-    // Reusing Bogie model
-    static class Bogie {
-        String name;
-        int capacity;
-
-        Bogie(String name, int capacity) {
-            this.name = name;
-            this.capacity = capacity;
-        }
-
-        public String toString() {
-            return name + " -> " + capacity;
-        }
-    }
 
     public static void main(String[] args) {
 
         System.out.println("=====================================");
-        System.out.println(" UC10 - Count Total Seats in Train ");
+        System.out.println(" UC11 - Validate Train ID & Cargo Code ");
         System.out.println("=====================================\n");
 
-        // Step 1: Create list
-        List<Bogie> bogies = new ArrayList<>();
+        // Sample inputs
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Sleeper", 70));
+        // Step 1: Define regex patterns
+        String trainPattern = "TRN-\\d{4}";
+        String cargoPattern = "PET-[A-Z]{2}";
 
-        // 🔹 Display bogies
-        System.out.println("Bogies in Train:");
-        bogies.forEach(System.out::println);
+        // Step 2: Validate using Pattern.matches()
+        boolean isTrainValid = Pattern.matches(trainPattern, trainId);
+        boolean isCargoValid = Pattern.matches(cargoPattern, cargoCode);
 
-        // Step 2: Aggregate using map + reduce
-        int totalSeats = bogies.stream()
-                .map(b -> b.capacity)          // extract capacity
-                .reduce(0, Integer::sum);      // sum all
+        // Step 3: Display results
+        System.out.println("Train ID: " + trainId + " -> " +
+                (isTrainValid ? "VALID" : "INVALID"));
 
-        // 🔹 Display total
-        System.out.println("\nTotal Seating Capacity: " + totalSeats);
+        System.out.println("Cargo Code: " + cargoCode + " -> " +
+                (isCargoValid ? "VALID" : "INVALID"));
     }
 }
