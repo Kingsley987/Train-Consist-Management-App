@@ -1,58 +1,38 @@
 public class TrainConsistManagementApp {
 
-    // 🔹 Custom Runtime Exception
-    static class CargoSafetyException extends RuntimeException {
-        public CargoSafetyException(String message) {
-            super(message);
-        }
-    }
-
-    // 🔹 Goods Bogie model
-    static class GoodsBogie {
-        String shape;
-        String cargo;
-
-        GoodsBogie(String shape) {
-            this.shape = shape;
-        }
-
-        // Assign cargo with safety validation
-        void assignCargo(String cargo) {
-
-            try {
-                // Rule: Rectangular bogie cannot carry Petroleum
-                if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
-                    throw new CargoSafetyException("Unsafe cargo assignment!");
-                }
-
-                this.cargo = cargo;
-                System.out.println("Cargo assigned: " + shape + " -> " + cargo);
-
-            } catch (CargoSafetyException e) {
-                System.out.println("Error: " + e.getMessage());
-
-            } finally {
-                System.out.println("Validation completed for: " + shape + "\n");
-            }
-        }
-    }
-
     public static void main(String[] args) {
 
-        System.out.println("=======================================");
-        System.out.println(" UC15 - Safe Cargo Assignment ");
-        System.out.println("=======================================\n");
+        System.out.println("===========================================");
+        System.out.println(" UC16 - Manual Sorting using Bubble Sort ");
+        System.out.println("===========================================\n");
 
-        GoodsBogie b1 = new GoodsBogie("Cylindrical");
-        GoodsBogie b2 = new GoodsBogie("Rectangular");
+        // Step 1: Create array of capacities
+        int[] capacities = {72, 56, 24, 70, 60};
 
-        // Safe assignment
-        b1.assignCargo("Petroleum");
+        // 🔹 Display original array
+        System.out.println("Original Capacities:");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
 
-        // Unsafe assignment
-        b2.assignCargo("Petroleum");
+        // 🔹 Bubble Sort Logic
+        for (int i = 0; i < capacities.length - 1; i++) {
+            for (int j = 0; j < capacities.length - 1 - i; j++) {
 
-        // Program continues
-        b2.assignCargo("Coal");
+                if (capacities[j] > capacities[j + 1]) {
+
+                    // Swap
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
+
+        // 🔹 Display sorted array
+        System.out.println("\n\nSorted Capacities (Ascending):");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
     }
 }
